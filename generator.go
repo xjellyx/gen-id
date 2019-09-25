@@ -1,4 +1,4 @@
-package generator
+package idSDK
 
 
 import "github.com/srlemon/idSDK/metadata"
