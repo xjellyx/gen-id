@@ -1,11 +1,11 @@
-package main
+package idSDK
 
 import (
 	"fmt"
 	"github.com/srlemon/idSDK/generator"
 )
 
-func main()  {
+func run()  {
 	// 生成总的信息
 	fmt.Println(generator.NewGeneratorData())
 	// 分个单独获取
