@@ -1,4 +1,4 @@
-package idSDK
+package generator
 
 
 import "github.com/srlemon/idSDK/metadata"
@@ -26,19 +26,4 @@ type GeneratorData struct {
 	Birthday string `json:"birthday"` // 出生日期
 	ValidPeriod string `json:"valid_period"` // 有效时期
 	preCardNo string
-}
-
-// NewGeneratorData
-func NewGeneratorData()(ret *GeneratorData)  {
-	var(
-		data = new(GeneratorData)
-	)
-	data.GeneratorBankID()
-	data.GeneratorAddress()
-	data.GeneratorEmail()
-	data.GeneratorIDCart()
-	data.GeneratorName()
-	data.GeneratorPhone()
-	ret  =data
-	return
 }

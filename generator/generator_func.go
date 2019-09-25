@@ -1,4 +1,4 @@
-package idSDK
+package generator
 
 import (
 	"fmt"
