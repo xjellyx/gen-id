@@ -3,6 +3,12 @@
 
 # Installation
 `go get github.com/srlemon/idSDK`
+如果网速过慢:
+```
+export GO111MODULE=on
+export GOPROXY=https://goproxy.io
+go get github.com/srlemon/idSDK
+```
 
 # Example
 
