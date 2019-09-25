@@ -1,6 +1,9 @@
 # idSDK
 一个身份证、名字、邮箱、地址、手机号码等随机生成的sdk
 
+# Installation
+go get github.com/srlemon/idSDK
+
 # Example
 
 ```golang
