@@ -5,7 +5,7 @@ import "github.com/srlemon/gen-id/generator"
 // NewGeneratorData
 func NewGeneratorData()(ret *generator.GeneratorData)  {
 	var(
-		data = new(GeneratorData)
+		data = new(generator.GeneratorData)
 	)
 	data.GeneratorBankID()
 	data.GeneratorAddress()
