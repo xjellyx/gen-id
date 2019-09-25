@@ -17,17 +17,18 @@ func (g *GeneratorData)GeneratorProvinceAdnCityRand()(ret string)  {
 }
 
 // GetAddress 获取地址
-func (g *GeneratorData)GeneratorAddress()  {
+func (g *GeneratorData)GeneratorAddress() (ret string) {
 	g.Address = g.GeneratorProvinceAdnCityRand()+
 		utils.GenRandomLengthChineseChars(2, 3) + "路" +
 		strconv.Itoa(utils.RandInt(1, 8000)) + "号" +
 		utils.GenRandomLengthChineseChars(2, 3) + "小区" +
 		strconv.Itoa(utils.RandInt(1, 20)) + "单元" +
 		strconv.Itoa(utils.RandInt(101, 2500)) + "室"
+	return g.Address
 }
 
 // GetBankID 获取银行卡号
-func (g *GeneratorData)GeneratorBankID()  {
+func (g *GeneratorData)GeneratorBankID() (ret string) {
 	var(
 		// 随机获取卡头
 		bank = metadata.CardBins[utils.RandInt(0,CardBinsLength)]
@@ -36,8 +37,9 @@ func (g *GeneratorData)GeneratorBankID()  {
 	// 生成 长度 bank.length-1 位卡号
 	g.preCardNo = strconv.Itoa(bank.Prefixes[utils.RandInt(0,len(bank.Prefixes))])+fmt.Sprintf(
 		"%0*d",bank.Length-7,utils.RandInt64(0,int64(math.Pow10(bank.Length-7))))
+	 g.processLUHN()
 
-
+	return g.BankID
 }
 
 // processLUHN 合成卡号
@@ -73,12 +75,13 @@ func (g *GeneratorData)processLUHN()  {
 }
 
 // GeneratorEmail 生成邮箱
-func (g *GeneratorData)GeneratorEmail()  {
+func (g *GeneratorData)GeneratorEmail() (ret string) {
 	g.Email = utils.RandStr(8) + "@" +utils.RandStr(5) +metadata.DomainSuffix[utils.RandInt(0, DomainSuffixLength)]
+	return g.Email
 }
 
 // GeneratorIDCart 生成身份证信息
-func (g *GeneratorData)GeneratorIDCart()  {
+func (g *GeneratorData)GeneratorIDCart() (ret string) {
 	// AreaCode 随机一个+4位随机数字(不够左填充0)
 	areaCode := metadata.AreaCode[utils.RandInt(0, AreaCodeLength)] +
 		fmt.Sprintf("%0*d", 4, utils.RandInt(1, 9999))
@@ -87,11 +90,9 @@ func (g *GeneratorData)GeneratorIDCart()  {
 	birthday:= t.Format("20060102")
 	randomCode:= fmt.Sprintf("%0*d", 3, utils.RandInt(0, 999))
 	prefix := areaCode + birthday + randomCode
-	g.BankID = prefix + g.VerifyCode(prefix)
-	// TODO 发证机关
-	if len(g.Address)>0{
+	g.IDCard = prefix + g.VerifyCode(prefix)
 
-	}
+	return g.IDCard
 }
 
 // 获取 VerifyCode
@@ -112,12 +113,14 @@ func (g *GeneratorData)randDate() time.Time {
 }
 
 // GeneratorPhone 生成手机号码
-func (g *GeneratorData)GeneratorPhone()  {
+func (g *GeneratorData)GeneratorPhone() (ret string) {
 	g.PhoneNum = metadata.MobilePrefix[utils.RandInt(0, MobilePrefix)] + fmt.Sprintf("%0*d", 8, utils.RandInt(0, 100000000))
+	return g.PhoneNum
 }
 
 // GeneratorName 生成姓名
-func (g *GeneratorData)GeneratorName()  {
+func (g *GeneratorData)GeneratorName()  (ret string){
 	g.Name = metadata.LastName[utils.RandInt(0, len(metadata.LastName))] + metadata.FirstName[utils.RandInt(0, len(metadata.LastName))]
+	return g.Name
 }
 
