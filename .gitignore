@@ -20,3 +20,4 @@ statik
 resources/metadata_code
 resources/fname
 *-packr.go
+*.swp

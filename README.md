@@ -1,14 +1,14 @@
-# idSDK
+# gen-id
 一个身份证、名字、邮箱、地址、手机号码等随机生成的sdk
 
 # Installation
-`go get github.com/srlemon/idSDK`
+`go get github.com/srlemon/gen-id`
 
 如果网速过慢:
 ```
 export GO111MODULE=on
 export GOPROXY=https://goproxy.io
-go get github.com/srlemon/idSDK
+go get github.com/srlemon/gen-id
 ```
 
 # Example
@@ -18,12 +18,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/srlemon/idSDK/generator"
+	"github.com/srlemon/gen-id"
+	"github.com/srlemon/gen-id/generator"
 )
 
 func main()  {
 	// 生成总的信息
-	fmt.Println(generator.NewGeneratorData())
+	fmt.Println(gen_id.NewGeneratorData())
 	// 分个单独获取
 	g:=new(generator.GeneratorData)
 	fmt.Println(g.GeneratorPhone())
