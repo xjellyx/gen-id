@@ -1,4 +1,4 @@
-package gen_id
+package genid
 
 import "testing"
 
@@ -7,7 +7,7 @@ func TestNewGeneratorData(t *testing.T) {
 }
 
 func BenchmarkNewGeneratorData(b *testing.B) {
-	for i:=0;i<b.N;i++{
+	for i := 0; i < b.N; i++ {
 		b.Log(NewGeneratorData())
 	}
 }

@@ -1,10 +1,10 @@
-package gen_id
+package genid
 
 import "github.com/srlemon/gen-id/generator"
 
 // NewGeneratorData
-func NewGeneratorData()(ret *generator.GeneratorData)  {
-	var(
+func NewGeneratorData() (ret *generator.GeneratorData) {
+	var (
 		data = new(generator.GeneratorData)
 	)
 	data.GeneratorBankID()
@@ -13,6 +13,6 @@ func NewGeneratorData()(ret *generator.GeneratorData)  {
 	data.GeneratorIDCart()
 	data.GeneratorName()
 	data.GeneratorPhone()
-	ret  =data
+	ret = data
 	return
 }

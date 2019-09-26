@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
-	gen_id "github.com/srlemon/gen-id"
+	"github.com/srlemon/gen-id"
 )
 
 func main() {
-	fmt.Println(gen_id.NewGeneratorData())
+	fmt.Println(genid.NewGeneratorData())
 	/*a := []int{
 		450329,
 		510500,
