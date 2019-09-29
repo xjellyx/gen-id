@@ -24,7 +24,7 @@ import (
 
 func main()  {
 	// 生成总的信息
-	fmt.Println(gen_id.NewGeneratorData())
+	fmt.Println(gen_id.NewGeneratorData(nil))
 	// 分个单独获取
 	g:=new(generator.GeneratorData)
 	fmt.Println(g.GeneratorPhone())
