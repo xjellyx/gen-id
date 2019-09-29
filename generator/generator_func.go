@@ -78,7 +78,7 @@ func (g *GeneratorData) GeneratorEmail() (ret string) {
 }
 
 // GeneratorIDCart 生成身份证信息
-func (g *GeneratorData) GeneratorIDCart() (ret string, issueOrg, birthday_, validPeriod, addr_ string) {
+func (g *GeneratorData) GeneratorIDCart(isFullAge *bool) (ret *GeneratorData, err error) {
 	// AreaCode
 	areaCode := metadata.AreaCode[utils.RandInt(0, AreaCodeLength)]
 	// 获取身份证地址
@@ -90,36 +90,95 @@ func (g *GeneratorData) GeneratorIDCart() (ret string, issueOrg, birthday_, vali
 	g.IDCardAddr = addr
 	g.IssueOrg = metadata.IDPrefix[areaCode] + "公安局某某分局"
 	// 获取随机生日
-	t := g.randDate()
-	g.Birthday = t.Format("2006-01-02")
-	birthday := t.Format("20060102")
+	var (
+		birthday   string
+		code       string
+		begin, end time.Time
+	)
+	if isFullAge == nil {
+		isFullAge = new(bool)
+		*isFullAge = true
+	}
+	if t, _err := g.randBirthday(*isFullAge); _err != nil {
+		err = _err
+		return
+	} else {
+		g.Birthday = t.UTC().Format("2006-01-02")
+		birthday = t.UTC().Format("20060102")
+	}
+
 	randomCode := fmt.Sprintf("%0*d", 3, utils.RandInt(0, 999))
 	// 合成身份证
 	prefix := strconv.Itoa(areaCode) + birthday + randomCode
-	g.IDCard = prefix + g.VerifyCode(prefix)
+	if code, err = g.VerifyCode(prefix); err != nil {
+		return
+	}
+	g.IDCard = prefix + code
 
 	// 获取随机有效时间
-	begin := g.randDate()
-	end := begin.AddDate(20, 0, 0)
+	if begin, err = g.randDate(); err != nil {
+		return
+	}
+	end = begin.AddDate(10, 0, 0)
 	g.ValidPeriod = begin.Format("2006.01.02") + "-" + end.Format("2006.01.02")
-	return g.IDCard, g.IssueOrg, g.Birthday, g.ValidPeriod, g.IDCardAddr
+
+	//
+	ret = g
+	return
+}
+
+// randBirthday isFullAge: true 年满18岁
+func (g *GeneratorData) randBirthday(isFullAge bool) (ret time.Time, err error) {
+	var (
+		begin, end time.Time
+	)
+	if isFullAge {
+		if begin, err = time.Parse("2006-01-02 15:04:05", time.Now().AddDate(-70, 0, 0).Format("2006-01-02 15:04:05")); err != nil {
+			return
+		}
+		if end, err = time.Parse("2006-01-02 15:04:05", time.Now().AddDate(-18, 0, 0).Format("2006-01-02 15:04:05")); err != nil {
+			return
+		}
+		ret = time.Unix(utils.RandInt64(begin.UTC().Unix(), end.UTC().Unix()), 0)
+	} else {
+		if begin, err = time.Parse("2006-01-02 15:04:05", "1970-01-01 00:00:00"); err != nil {
+			return
+		}
+		if end, err = time.Parse("2006-01-02 15:04:05", time.Now().Format("2006-01-02 15:04:05")); err != nil {
+			return
+		}
+		ret = time.Unix(utils.RandInt64(begin.UTC().Unix(), end.UTC().Unix()), 0)
+	}
+
+	return
 }
 
 // 获取 VerifyCode
-func (g *GeneratorData) VerifyCode(cardId string) string {
+func (g *GeneratorData) VerifyCode(cardId string) (ret string, err error) {
 	tmp := 0
 	for i, v := range metadata.Wi {
-		t, _ := strconv.Atoi(string(cardId[i]))
-		tmp += t * v
+		if t, _err := strconv.Atoi(string(cardId[i])); _err == nil {
+			tmp += t * v
+		} else {
+			err = _err
+			return
+		}
 	}
-	return metadata.ValCodeArr[tmp%11]
+	return metadata.ValCodeArr[tmp%11], nil
 }
 
-// TODO 随机时间 1970-2019
-func (g *GeneratorData) randDate() time.Time {
-	begin, _ := time.Parse("2006-01-02 15:04:05", "1970-01-01 00:00:00")
-	end, _ := time.Parse("2006-01-02 15:04:05", "2019-01-01 00:00:00")
-	return time.Unix(utils.RandInt64(begin.Unix(), end.Unix()), 0)
+// randDate 身份证有效期随机时间 有效期最低限制now-10年
+func (g *GeneratorData) randDate() (ret time.Time, err error) {
+	var (
+		begin, end time.Time
+	)
+	if begin, err = time.Parse("2006-01-02 15:04:05", time.Now().AddDate(-10, 0, 0).Format("2006-01-02 15:04:05")); err != nil {
+		return
+	}
+	if end, err = time.Parse("2006-01-02 15:04:05", time.Now().Format("2006-01-02 15:04:05")); err != nil {
+		return
+	}
+	return time.Unix(utils.RandInt64(begin.Unix(), end.Unix()), 0), err
 }
 
 // GeneratorPhone 生成手机号码

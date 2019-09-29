@@ -80,12 +80,12 @@ func BenchmarkGeneratorData_GeneratorProvinceAdnCityRand(b *testing.B) {
 
 func TestGeneratorData_GeneratorIDCart(t *testing.T) {
 	g := new(GeneratorData)
-	t.Log(g.GeneratorIDCart())
+	t.Log(g.GeneratorIDCart(nil))
 }
 
 func BenchmarkGeneratorData_GeneratorIDCart(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		g := newGenerator()
-		b.Log(g.GeneratorIDCart())
+		b.Log(g.GeneratorIDCart(nil))
 	}
 }

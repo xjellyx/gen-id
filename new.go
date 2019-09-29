@@ -3,14 +3,14 @@ package genid
 import "github.com/srlemon/gen-id/generator"
 
 // NewGeneratorData
-func NewGeneratorData() (ret *generator.GeneratorData) {
+func NewGeneratorData(isFullAge *bool) (ret *generator.GeneratorData) {
 	var (
 		data = new(generator.GeneratorData)
 	)
 	data.GeneratorBankID()
 	data.GeneratorAddress()
 	data.GeneratorEmail()
-	data.GeneratorIDCart()
+	data.GeneratorIDCart(isFullAge)
 	data.GeneratorName()
 	data.GeneratorPhone()
 	ret = data
