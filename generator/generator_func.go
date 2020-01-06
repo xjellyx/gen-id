@@ -4,8 +4,11 @@ import (
 	"fmt"
 	"github.com/srlemon/gen-id/metadata"
 	"github.com/srlemon/gen-id/utils"
+	"io/ioutil"
 	"math"
+	"math/rand"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -189,6 +192,28 @@ func (g *GeneratorData) GeneratorPhone() (ret string) {
 
 // GeneratorName 生成姓名
 func (g *GeneratorData) GeneratorName() (ret string) {
-	g.Name = metadata.LastName[utils.RandInt(0, len(metadata.LastName))] + metadata.FirstName[utils.RandInt(0, len(metadata.LastName))]
+	rand.Seed(time.Now().UnixNano())
+	if rand.Int63()%3==0{
+		g.Name = metadata.LastName[utils.RandInt(0, len(metadata.LastName))] + metadata.FirstName[utils.RandInt(
+			0, len(metadata.LastName))]
+	}else {
+		var(
+			body []byte
+			err error
+		)
+		if body,err = ioutil.ReadFile("./metadata/name.txt");err!=nil{
+			panic(err)
+		}
+		str:=string(body)
+		arr:=strings.Split(str,"\n")
+		rand.Seed(time.Now().UnixNano())
+		n:=rand.Int63n(int64(len(arr)))
+		g.Name = arr[n]
+	}
+
+	rand.Seed(time.Now().UnixNano())
+	if rand.Int63()%5==0{
+		g.Name+=metadata.FirstName[utils.RandInt(0, len(metadata.LastName))]
+	}
 	return g.Name
 }
