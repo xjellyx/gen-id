@@ -4,10 +4,8 @@ import (
 	"fmt"
 	"github.com/srlemon/gen-id/metadata"
 	"github.com/srlemon/gen-id/utils"
-	"io/ioutil"
 	"math"
 	"math/rand"
-	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -198,16 +196,7 @@ func (g *GeneratorData) GeneratorName() (ret string) {
 		g.Name = metadata.LastName[utils.RandInt(0, len(metadata.LastName))] + metadata.FirstName[utils.RandInt(
 			0, len(metadata.LastName))]
 	}else {
-		var(
-			body []byte
-			err error
-		)
-		fmt.Println(		os.Getwd())
-		if body,err = ioutil.ReadFile("./metadata/name.txt");err!=nil{
-			panic(err)
-		}
-		str:=string(body)
-		arr:=strings.Split(str,"\n")
+		arr:=strings.Split(metadata.NameStr,"\n")
 		rand.Seed(time.Now().UnixNano())
 		n:=rand.Int63n(int64(len(arr)))
 		g.Name = arr[n]
