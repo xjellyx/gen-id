@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"math"
 	"math/rand"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -201,6 +202,7 @@ func (g *GeneratorData) GeneratorName() (ret string) {
 			body []byte
 			err error
 		)
+		fmt.Println(		os.Getwd())
 		if body,err = ioutil.ReadFile("./metadata/name.txt");err!=nil{
 			panic(err)
 		}
