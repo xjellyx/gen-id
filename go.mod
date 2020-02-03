@@ -1,3 +1,3 @@
-module github.com/srlemon/gen-id
+module github.com/olefen/gen-id
 
 go 1.13

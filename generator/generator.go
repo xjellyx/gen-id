@@ -1,6 +1,6 @@
 package generator
 
-import "github.com/srlemon/gen-id/metadata"
+import "github.com/olefen/gen-id/metadata"
 
 const (
 	ProvinceCityLength = len(metadata.ProvinceCity)
