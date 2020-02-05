@@ -1,3 +1,3 @@
-module github.com/olefen/gen-id
+module github.com/olongfen/gen-id
 
 go 1.13

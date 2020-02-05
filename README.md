@@ -2,13 +2,13 @@
 一个身份证、名字、邮箱、地址、手机号码等随机生成的sdk
 
 # Installation
-`go get github.com/olefen/gen-id`
+`go get github.com/olongfen/gen-id`
 
 如果网速过慢:
 ```
 export GO111MODULE=on
 export GOPROXY=https://goproxy.io
-go get github.com/olefen/gen-id
+go get github.com/olongfen/gen-id
 ```
 
 # Example
@@ -18,8 +18,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/olefen/gen-id"
-	"github.com/olefen/gen-id/generator"
+	"github.com/olongfen/gen-id"
+	"github.com/olongfen/gen-id/generator"
 )
 
 func main()  {

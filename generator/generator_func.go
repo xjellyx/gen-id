@@ -2,8 +2,8 @@ package generator
 
 import (
 	"fmt"
-	"github.com/olefen/gen-id/metadata"
-	"github.com/olefen/gen-id/utils"
+	"github.com/olongfen/gen-id/metadata"
+	"github.com/olongfen/gen-id/utils"
 	"math"
 	"math/rand"
 	"strconv"
