@@ -8,7 +8,7 @@
 ```
 export GO111MODULE=on
 export GOPROXY=https://goproxy.io
-go get github.com/olongfen/gen-id
+go get github.com/olongfen/gen-id@master
 ```
 
 # Example
