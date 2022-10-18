@@ -2,13 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/olongfen/gen-id"
+	"github.com/olongfen/gen-id/generator"
 	"github.com/olongfen/gen-id/utils"
 	"time"
 )
 
 func main() {
-	fmt.Println(genid.NewGeneratorData(nil))
+	fmt.Println(generator.NewGeneratorData(nil))
 	fmt.Println(randDate().String())
 
 }

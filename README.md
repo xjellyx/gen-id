@@ -11,6 +11,12 @@ export GOPROXY=https://goproxy.io
 go get github.com/olongfen/gen-id@master
 ```
 
+# Usage
+```shell
+    go build main.go
+    ./main -count=10
+```
+
 # Example
 
 ```golang
@@ -24,12 +30,12 @@ import (
 
 func main()  {
 	// 生成总的信息
-	fmt.Println(gen_id.NewGeneratorData(nil))
+	fmt.Println(generator.NewGeneratorData(nil))
 	// 分个单独获取
 	g:=new(generator.GeneratorData)
 	fmt.Println(g.GeneratorPhone())
 	fmt.Println(g.GeneratorName())
-	fmt.Println(g.GeneratorIDCart())
+	fmt.Println(g.GeneratorIDCart(nil))
 	fmt.Println(g.GeneratorEmail())
 	fmt.Println(g.GeneratorBankID())
 	fmt.Println(g.GeneratorAddress())

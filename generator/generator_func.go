@@ -16,7 +16,7 @@ func (g *GeneratorData) GeneratorProvinceAdnCityRand() (ret string) {
 	return metadata.ProvinceCity[utils.RandInt(0, ProvinceCityLength)]
 }
 
-// GetAddress 获取地址
+// GeneratorAddress 获取地址
 func (g *GeneratorData) GeneratorAddress() (ret string) {
 	g.Address = g.GeneratorProvinceAdnCityRand() +
 		utils.GenRandomLengthChineseChars(2, 3) + "路" +
@@ -27,14 +27,14 @@ func (g *GeneratorData) GeneratorAddress() (ret string) {
 	return g.Address
 }
 
-// GetBankID 获取银行卡号
+// GeneratorBankID 获取银行卡号
 func (g *GeneratorData) GeneratorBankID() (ret string) {
 	var (
 		// 随机获取卡头
 		bank = metadata.CardBins[utils.RandInt(0, CardBinsLength)]
 	)
 	// 生成 长度 bank.length-1 位卡号
-	g.preCardNo = strconv.Itoa(bank.Prefixes[utils.RandInt(0, len(bank.Prefixes))]) + fmt.Sprintf(
+	g.PreCardNo = strconv.Itoa(bank.Prefixes[utils.RandInt(0, len(bank.Prefixes))]) + fmt.Sprintf(
 		"%0*d", bank.Length-7, utils.RandInt64(0, int64(math.Pow10(bank.Length-7))))
 	g.processLUHN()
 
@@ -44,7 +44,7 @@ func (g *GeneratorData) GeneratorBankID() (ret string) {
 // processLUHN 合成卡号
 func (g *GeneratorData) processLUHN() {
 	checkSum := 0
-	tmpCardNo := utils.ReverseString(g.preCardNo)
+	tmpCardNo := utils.ReverseString(g.PreCardNo)
 	for i, v := range tmpCardNo {
 		// 数据层确保卡号正确
 		tmp, _ := strconv.Atoi(string(v))
@@ -65,7 +65,7 @@ func (g *GeneratorData) processLUHN() {
 		}
 	}
 	if checkSum%10 != 0 {
-		g.BankID = g.preCardNo + strconv.Itoa(10-checkSum%10)
+		g.BankID = g.PreCardNo + strconv.Itoa(10-checkSum%10)
 	} else {
 		// 如果不巧生成的前 卡长度-1 位正好符合 LUHN 算法
 		// 那么需要递归重新生成(需要符合 cardBind 中卡号长度)
@@ -155,7 +155,7 @@ func (g *GeneratorData) randBirthday(isFullAge bool) (ret time.Time, err error) 
 	return
 }
 
-// 获取 VerifyCode
+// VerifyCode 获取 VerifyCode
 func (g *GeneratorData) VerifyCode(cardId string) (ret string, err error) {
 	tmp := 0
 	for i, v := range metadata.Wi {
@@ -192,19 +192,19 @@ func (g *GeneratorData) GeneratorPhone() (ret string) {
 // GeneratorName 生成姓名
 func (g *GeneratorData) GeneratorName() (ret string) {
 	rand.Seed(time.Now().UnixNano())
-	if rand.Int63()%3==0{
+	if rand.Int63()%3 == 0 {
 		g.Name = metadata.LastName[utils.RandInt(0, len(metadata.LastName))] + metadata.FirstName[utils.RandInt(
 			0, len(metadata.LastName))]
-	}else {
-		arr:=strings.Split(metadata.NameStr,"\n")
+	} else {
+		arr := strings.Split(metadata.NameStr, "\n")
 		rand.Seed(time.Now().UnixNano())
-		n:=rand.Int63n(int64(len(arr)))
+		n := rand.Int63n(int64(len(arr)))
 		g.Name = arr[n]
 	}
 
 	rand.Seed(time.Now().UnixNano())
-	if rand.Int63()%5==0{
-		g.Name+=metadata.FirstName[utils.RandInt(0, len(metadata.LastName))]
+	if rand.Int63()%5 == 0 {
+		g.Name += metadata.FirstName[utils.RandInt(0, len(metadata.LastName))]
 	}
 	return g.Name
 }

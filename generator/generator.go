@@ -25,5 +25,19 @@ type GeneratorData struct {
 	ValidPeriod string `json:"valid_period"` // 有效时期
 	IDCardAddr  string `json:"id_card_addr"` // 身份证地址
 	// other
-	preCardNo string
+	PreCardNo string `json:"-"`
+}
+
+func NewGeneratorData(isFullAge *bool) (ret *GeneratorData) {
+	var (
+		data = new(GeneratorData)
+	)
+	data.GeneratorBankID()
+	data.GeneratorAddress()
+	data.GeneratorEmail()
+	data.GeneratorIDCart(isFullAge)
+	data.GeneratorName()
+	data.GeneratorPhone()
+	ret = data
+	return
 }
